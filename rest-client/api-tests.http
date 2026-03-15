@@ -21,20 +21,6 @@ Content-Type: application/json
 GET {{baseUrl}}/products
 Authorization: Bearer {{token}}
 
-### Fazer Compra
-POST {{baseUrl}}/purchases
-Content-Type: application/json
-
-{
-  "client_document": "12345678900",
-  "client_name": "João Silva",
-  "products": [
-    {
-      "product_id": 1,
-      "quantity": 2
-    }
-  ]
-}
 
 ### Listar Transações
 GET {{baseUrl}}/transactions
