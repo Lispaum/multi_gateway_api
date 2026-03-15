@@ -4,7 +4,7 @@
 @gateway2_token = tk_f2198cc671b5289fa856
 @gateway2_secret = 3d15e8ed6131446ea7e3456728b1211f
 
-###
+### Collection disponibilizado no repo do teste em formato rest client
 
 # @name login
 POST {{gateway1}}/login
