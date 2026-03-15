@@ -2,14 +2,7 @@
 @token = {{login.response.body.token}}
 
 
-# todo
-# README atualizado com instruções de Docker
-# Testar docker compose up em máquina limpa
-# Verificar que todas as rotas funcionam
-# Confirmar que fallback de gateways funciona
-# Verificar que autenticação/autorização funciona
-# Remover arquivos desnecessários (.env.example, etc)
-# valors das compras sempre em centavos
+
 
 ### Health Check
 GET {{baseUrl}}/health
