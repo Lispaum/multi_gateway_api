@@ -32,6 +32,17 @@ Sistema de API de pagamentos com suporte a múltiplos gateways e fallback autom�
 
 ---
 
+## ⚠️ Nota sobre Variáveis de Ambiente
+
+Para facilitar a avaliação deste teste técnico, o arquivo `.env`
+está incluído no repositório com valores de desenvolvimento, tal como as variáveis no docker-compose.
+
+**Em produção, este arquivo seria:**
+
+- Adicionado ao `.gitignore`
+- Gerenciado via secrets/vault
+- Nunca commitado no repositório
+
 ## 🚀 Instalação
 
 ### Com Docker Compose (Recomendado)
