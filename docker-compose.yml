@@ -1,0 +1,78 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: multi_gateway_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: multi_gateway_db
+    ports:
+      - '3306:3306'
+    # volumes:
+    #   - mysql_data:/var/lib/mysql
+    networks:
+      - multi_gateway_network
+    healthcheck:
+      test: ['CMD-SHELL', "mysql -uroot -ppassword -e 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 300s
+
+  # Gateways Mocks  - Port 3001 and 3002
+  gateways:
+    image: matheusprotzen/gateways-mock
+    container_name: gateways_mock
+    ports:
+      - '3001:3001'
+      - '3002:3002'
+    networks:
+      - multi_gateway_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: multi_gateway_app
+    ports:
+      - '3333:3333'
+    environment:
+      - NODE_ENV=production
+      - APP_KEY=3d8c5eab1b1d4c2e9f7f8a3e5b6c7d8e9f1a2b3c
+      - APP_URL=http://localhost:3333
+      - LOG_LEVEL=info
+      - SESSION_DRIVER=cookie
+      #
+      - HOST=0.0.0.0
+      - PORT=3333
+      #
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_DATABASE=multi_gateway_db
+      #
+      - GATEWAY1_URL=http://gateways:3001
+      - GATEWAY1_EMAIL=dev@betalent.tech
+      - GATEWAY1_TOKEN=FEC9BB078BF338F464F96B48089EB498
+      #
+      - GATEWAY2_URL=http://gateways:3002
+      - GATEWAY2_AUTH_TOKEN=tk_f2198cc671b5289fa856
+      - GATEWAY2_AUTH_SECRET=3d15e8ed6131446ea7e3456728b1211f
+    networks:
+      - multi_gateway_network
+    depends_on:
+      mysql:
+        condition: service_healthy
+      gateways:
+        condition: service_started
+    command: sh -c "node ace migration:run --force && node ace db:seed && node bin/server.js"
+
+networks:
+  multi_gateway_network:
+    driver: bridge
+
+# volumes:
+#   mysql_data:
+

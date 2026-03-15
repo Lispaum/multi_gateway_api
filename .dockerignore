@@ -1,0 +1,84 @@
+
+# ----- Dependências (instaladas no container) -----
+node_modules
+
+# ----- Build (gerado no container) -----
+build
+dist
+
+# ----- Git -----
+.git
+.gitignore
+.gitattributes
+
+# ----- Variáveis de ambiente (usar docker-compose) -----
+.env
+.env.*
+
+# ----- IDE / Editores -----
+.vscode
+.idea
+.fleet
+*.swp
+*.swo
+*~
+.editorconfig
+
+# ----- Testes -----
+# comentado fora devido erro TS no build no container
+# tests
+# test
+# __tests__
+# *.spec.ts
+# *.test.ts
+# coverage
+# .nyc_output
+# jest.config.*
+# vitest.config.*
+# japa.config.*
+
+# ----- Logs e temporários -----
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+tmp
+temp
+
+# ----- Documentação -----
+README.md
+README.*
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+docs
+*.md
+
+# ----- Docker (evitar recursão) -----
+Dockerfile
+Dockerfile.*
+docker-compose*.yml
+docker-compose*.yaml
+.dockerignore
+
+# ----- Sistema operacional -----
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ----- Outros -----
+.husky
+.github
+.gitlab
+.circleci
+.travis.yml
+ace-manifest.json
+public/assets

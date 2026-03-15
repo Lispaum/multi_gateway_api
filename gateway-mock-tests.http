@@ -1,0 +1,84 @@
+@gateway1 = http://localhost:3001
+@gateway2 = http://localhost:3002
+
+@gateway2_token = tk_f2198cc671b5289fa856
+@gateway2_secret = 3d15e8ed6131446ea7e3456728b1211f
+
+###
+
+# @name login
+POST {{gateway1}}/login
+Content-Type: application/json
+
+{
+  "email": "dev@betalent.tech",
+  "token": "FEC9BB078BF338F464F96B48089EB498"
+}
+
+###
+
+@token = {{login.response.body.token}}
+
+# Gateway 1 - List Transactions
+GET {{gateway1}}/transactions
+Authorization: Bearer {{token}}
+
+###
+
+# @name createTransaction
+POST {{gateway1}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "amount": 1000,
+  "name": "tester",
+  "email": "tester@email.com",
+  "cardNumber": "5569000000006063",
+  "cvv": "120"
+}
+
+###
+
+@transactionId = {{createTransaction.response.body.id}}
+
+# Gateway 1 - Chargeback
+POST {{gateway1}}/transactions/{{transactionId}}/charge_back
+Authorization: Bearer {{token}}
+
+###
+
+# Gateway 2 - Listar Transações
+GET {{gateway2}}/transacoes
+Gateway-Auth-Token: {{gateway2_token}}
+Gateway-Auth-Secret: {{gateway2_secret}}
+
+###
+
+# @name createTransactionGateway2
+POST {{gateway2}}/transacoes
+Gateway-Auth-Token: {{gateway2_token}}
+Gateway-Auth-Secret: {{gateway2_secret}}
+Content-Type: application/json
+
+{
+  "valor": 1000,
+  "nome": "tester",
+  "email": "tester@email.com",
+  "numeroCartao": "5569000000006063",
+  "cvv": "300"
+}
+
+###
+
+@transactionIdGateway2 = {{createTransactionGateway2.response.body.id}}
+
+# Gateway 2 - Reembolso
+POST {{gateway2}}/transacoes/reembolso
+Gateway-Auth-Token: {{gateway2_token}}
+Gateway-Auth-Secret: {{gateway2_secret}}
+Content-Type: application/json
+
+{
+  "id": "{{transactionIdGateway2}}"
+}

@@ -1,0 +1,48 @@
+@baseUrl = http://localhost:3333
+@token = {{login.response.body.token}}
+
+
+# todo
+# README atualizado com instruções de Docker
+# Testar docker compose up em máquina limpa
+# Verificar que todas as rotas funcionam
+# Confirmar que fallback de gateways funciona
+# Verificar que autenticação/autorização funciona
+# Remover arquivos desnecessários (.env.example, etc)
+# valors das compras sempre em centavos
+
+### Health Check
+GET {{baseUrl}}/health
+
+### Login (salva token automaticamente)
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "password"
+}
+
+### Listar Produtos (usa token do login)
+GET {{baseUrl}}/products
+Authorization: Bearer {{token}}
+
+### Fazer Compra
+POST {{baseUrl}}/purchases
+Content-Type: application/json
+
+{
+  "client_document": "12345678900",
+  "client_name": "João Silva",
+  "products": [
+    {
+      "product_id": 1,
+      "quantity": 2
+    }
+  ]
+}
+
+### Listar Transações
+GET {{baseUrl}}/transactions
+Authorization: Bearer {{token}}
