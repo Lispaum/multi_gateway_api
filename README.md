@@ -48,11 +48,9 @@ está incluído no repositório com valores de desenvolvimento, tal como as vari
 ### Com Docker Compose (Recomendado)
 
 ```bash
-# Clone o repositório e entre no projeto
-cd /multi_gateway_payment_api
 
 # Inicie os containers
-docker-compose up -d
+docker-compose up
 
 # A API estará disponível em http://localhost:3333
 ```
@@ -67,11 +65,11 @@ O Docker Compose irá configurar:
 ### Instalação Local
 
 ```bash
-# Instalar dependências
-npm install
+# Executar os mock gateways
+docker run -p 3001:3001 -p 3002:3002 matheusprotzen/gateways-mock
 
-# Configurar variáveis de ambiente
-cp .env.example .env
+# Abra novo terminal
+npm i
 
 # Executar migrações
 npx tsx bin/console.ts migration:run
@@ -92,9 +90,10 @@ npm run dev
 docker run -p 3001:3001 -p 3002:3002 matheusprotzen/gateways-mock
 
 # Abra novo terminal
+npm i
 
 # Com banco SQLite (recomendado para testes)
-DB_CONNECTION=sqlite npm test
+npm test
 ```
 
 A suite de testes contém **50 testes funcionais** cobrindo:

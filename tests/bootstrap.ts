@@ -40,7 +40,11 @@ export const plugins: Config['plugins'] = [
  */
 export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
   setup: [() => testUtils.db().migrate()],
-  teardown: [() => testUtils.db().truncate()],
+  teardown: [
+    async () => {
+      testUtils.db().truncate()
+    },
+  ],
 }
 
 /**
