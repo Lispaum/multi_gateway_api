@@ -20,7 +20,7 @@ Sistema de API de pagamentos com suporte a múltiplos gateways e fallback autom�
 - 💰 **Sistema de Reembolso** integrado com gateways
 - 📊 **Consulta de Transações** e clientes
 - ✅ **Validação** completa com VineJS
-- 🧪 **Suite de Testes** com 50 testes automatizados
+- 🧪 **Suite de Testes** com 50+ testes automatizados
 
 ---
 
@@ -92,11 +92,11 @@ docker run -p 3001:3001 -p 3002:3002 matheusprotzen/gateways-mock
 # Abra novo terminal
 npm i
 
-# Com banco SQLite (recomendado para testes)
+# Teste roda com banco SQLite
 npm test
 ```
 
-A suite de testes contém **50 testes funcionais** cobrindo:
+A suite de testes contém **50+ testes funcionais** cobrindo:
 
 - Autenticação e autorização
 - CRUD de usuários, produtos e gateways
