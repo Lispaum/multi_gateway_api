@@ -144,6 +144,32 @@ test.group('Transactions Refund', (group) => {
     assert.oneOf(response.status(), [200])
   })
 
+  test('should refund on Gateway 2', async ({ client, assert }) => {
+    const finance = await User.create({
+      email: 'test-finance@test.com',
+      password: 'password123',
+      role: UserRole.FINANCE,
+    })
+
+    const testClient = await Client.create({ name: 'John Doe', email: 'john@example.com' })
+    await Gateway.create({ name: 'Gateway 1', isActive: true, priority: 1 })
+    const gateway2 = await Gateway.create({ name: 'Gateway 2', isActive: true, priority: 2 })
+
+    const transaction = await Transaction.create({
+      clientId: testClient.id,
+      gatewayId: gateway2.id,
+      externalId: 'ext123',
+      status: TransactionStatus.APPROVED,
+      amount: 100.0,
+      cardLastNumbers: '1234',
+    })
+
+    const response = await client.post(`/transactions/${transaction.id}/refund`).loginAs(finance)
+
+    // O teste verifica que o finance tem acesso ao endpoint
+    assert.oneOf(response.status(), [200])
+  })
+
   test('USER should NOT be able to refund', async ({ client }) => {
     const user = await User.create({
       email: 'test-user@test.com',

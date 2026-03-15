@@ -66,7 +66,7 @@ Content-Type: application/json
   "nome": "tester",
   "email": "tester@email.com",
   "numeroCartao": "5569000000006063",
-  "cvv": "300"
+  "cvv": "120"
 }
 
 ###
